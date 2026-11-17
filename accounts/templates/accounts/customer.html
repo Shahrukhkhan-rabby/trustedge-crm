@@ -1,0 +1,76 @@
+<!--INHERITING FROM MAIN-->
+<!--https://docs.djangoproject.com/en/3.1/howto/overriding-templates/#extending-an-overridden-template-->
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Customer: </h5>
+            <hr>
+            <a href="" class="btn btn-outline-info btn-sm btn-block">Update customer</a>
+            <a href="{% url 'create_order' customer.id %}" class="btn btn-outline-info btn-sm btn-block">Place Order</a>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Contact info</h5>
+            <hr>
+            <p>Email: {{customer.email}}</p>
+            <p>Phone: {{customer.phone}}</p>
+        </div>
+    </div>
+    <div class="card-md">
+        <div class="card card-body">
+            <h5>Total orders</h5>
+            <hr>
+            <h1 style="text-align:center; padding:10px">{{order_count}}</h1>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <form action="" class="form" method="get">
+                {{myFilter.form}}
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <thead class="bg-dark text-white">
+                <tr>
+                    <td>Product</td>
+                    <td>Note</td>
+                    <td>Date Ordered</td>
+                    <td>Status</td>
+                    <td>Update</td>
+                    <td>Remove</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.product}}</td>
+                    <td>{{order.note}}</td>
+                    <td>{{order.date_create}}</td>
+                    <td>{{order.status}}</td>
+                    <td><a href="{% url 'update_order' order.id %}" class="btn btn-primary">Update</a></td>
+                    <td><a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
